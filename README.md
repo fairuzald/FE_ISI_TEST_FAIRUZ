@@ -1,36 +1,123 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Todo List Application
 
-## Getting Started
+## 🚀 Live Demo
 
-First, run the development server:
+The application is deployed and accessible at:
+[http://todo.fairuzald.site/](http://todo.fairuzald.site/)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### Demo Accounts
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Lead/Admin User**:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+  - Email: lead@example.com
+  - Password: leadpassword
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Team Member**:
+  - Email: team1@example.com
+  - Password: teampassword
 
-## Learn More
+## ✨ Features
 
-To learn more about Next.js, take a look at the following resources:
+- **User Authentication**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+  - JWT-based authentication
+  - Login and registration functionality
+  - Role-based authorization (Lead and Team roles)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Task Management**
 
-## Deploy on Vercel
+  - Create, read, update, and delete tasks
+  - Task assignment to team members
+  - Task status tracking (Not Started, On Progress, Done, Reject)
+  - Activity logs for all task changes
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **User Interface**
+  - Responsive design
+  - Dark mode support
+  - User-friendly dashboard
+  - Real-time filtering and sorting
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🛠️ Technologies Used
+
+- **Frontend**
+
+  - Next.js 14 (App Router)
+  - TypeScript
+  - TailwindCSS
+  - React Hook Form
+  - Zod for validation
+
+- **Backend**
+
+  - Next.js API Routes
+  - PostgreSQL
+  - Drizzle ORM
+  - JWT authentication
+
+- **Deployment**
+  - Docker & Docker Compose
+  - Nginx (as reverse proxy)
+
+## 🔧 Getting Started
+
+### Prerequisites
+
+- Node.js (v18 or higher)
+- npm or yarn
+- PostgreSQL database
+- Docker & Docker Compose (optional)
+
+### Local Development Setup
+
+1. Clone the repository
+
+   ```bash
+   git clone https://github.com/fairuzald/FE_ISI_TEST_FAIRUZ.git
+   cd FE_ISI_TEST_FAIRUZ
+   ```
+
+2. Install dependencies
+
+   ```bash
+   npm install
+   ```
+
+3. Create `.env` file based on `.env.example`
+
+   ```bash
+   cp .env.example .env
+   ```
+
+4. Run database local
+
+   ```bash
+   npm run docker:dev
+   ```
+
+5. Set up the database
+
+   ```bash
+   npm run db:push
+   npm run db:seed
+   ```
+
+6. Start the development server
+
+   ```bash
+   npm run dev
+   ```
+
+7. Open [http://localhost:3000](http://localhost:3000) in your browser
+
+### Docker Setup
+
+1. Clone the repository and navigate to the project directory
+
+2. Build and start the containers
+
+   ```bash
+   docker-compose up -d
+   ```
+
+3. Access the application at [http://localhost:3000](http://localhost:3000)
+   m what I've included, such as the exact technologies or implementation details.
