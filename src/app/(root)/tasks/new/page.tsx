@@ -1,6 +1,5 @@
 "use client";
 
-import { Navbar } from "@/components/navbar";
 import { UserAssignmentSelect } from "@/components/task/user-chip";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -68,7 +67,7 @@ export default function CreateTaskPage() {
             title: "Access Denied",
             message: "Only team leads can create tasks.",
           });
-          router.push("/dashboard");
+          router.push("/");
           return;
         }
 
@@ -150,7 +149,7 @@ export default function CreateTaskPage() {
         message: "Your task has been created successfully.",
       });
 
-      router.push("/dashboard");
+      router.push("/");
     } catch (err) {
       setError((err as Error).message);
       showToast({
@@ -175,127 +174,123 @@ export default function CreateTaskPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
-      <Navbar user={user} />
+    <>
+      <div className="mb-6 flex items-center justify-between">
+        <H1 className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent flex items-center gap-3">
+          <PlusCircle size={28} className="text-blue-600" />
+          Create New Task
+        </H1>
 
-      <main className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-6 flex items-center justify-between">
-          <H1 className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent flex items-center gap-3">
-            <PlusCircle size={28} className="text-blue-600" />
-            Create New Task
-          </H1>
+        <Link href="/">
+          <Button
+            variant="outline"
+            size="sm"
+            className="flex items-center gap-2"
+            leftIcon={<ArrowLeft size={16} />}
+          >
+            Cancel
+          </Button>
+        </Link>
+      </div>
 
-          <Link href="/dashboard">
-            <Button
-              variant="outline"
-              size="sm"
-              className="flex items-center gap-2"
-              leftIcon={<ArrowLeft size={16} />}
-            >
-              Cancel
-            </Button>
-          </Link>
-        </div>
+      <Card className="bg-white dark:bg-gray-800 shadow-md">
+        <CardHeader>
+          <CardTitle className="text-lg">Task Details</CardTitle>
+        </CardHeader>
+        <CardContent>
+          {error && (
+            <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-800 dark:text-red-200 rounded-md text-sm flex items-center gap-2">
+              <AlertCircle size={16} />
+              {error}
+            </div>
+          )}
 
-        <Card className="bg-white dark:bg-gray-800 shadow-md">
-          <CardHeader>
-            <CardTitle className="text-lg">Task Details</CardTitle>
-          </CardHeader>
-          <CardContent>
-            {error && (
-              <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-800 dark:text-red-200 rounded-md text-sm flex items-center gap-2">
-                <AlertCircle size={16} />
-                {error}
-              </div>
-            )}
-
-            <form onSubmit={handleSubmit(onSubmit)}>
-              {/* Title input */}
-              <Input
-                label={
-                  <span className="flex items-center gap-2">
-                    <FileText size={14} />
-                    Title
-                  </span>
-                }
-                error={errors.title?.message}
-                fullWidth
-                className="mb-4"
-                {...register("title")}
-                placeholder="Enter task title..."
-                required
-              />
-
-              {/* Descripttion */}
-              <div className="mb-4">
-                <label className="mb-1 text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
+          <form onSubmit={handleSubmit(onSubmit)}>
+            {/* Title input */}
+            <Input
+              label={
+                <span className="flex items-center gap-2">
                   <FileText size={14} />
-                  Description
-                </label>
-                <textarea
-                  className={`block w-full rounded-md border ${
-                    errors.description
-                      ? "border-red-500 focus:border-red-500 focus:ring-red-500"
-                      : "border-gray-300 dark:border-gray-600 focus:border-blue-500 focus:ring-blue-500"
-                  } px-3 py-2 text-sm focus:outline-none focus:ring-1 bg-transparent text-gray-900 dark:text-gray-100`}
-                  rows={4}
-                  {...register("description")}
-                  placeholder="Add a detailed description of the task..."
-                />
-                {errors.description && (
-                  <p className="mt-1 text-sm text-red-500">
-                    {errors.description.message}
-                  </p>
-                )}
-              </div>
+                  Title
+                </span>
+              }
+              error={errors.title?.message}
+              fullWidth
+              className="mb-4"
+              {...register("title")}
+              placeholder="Enter task title..."
+              required
+            />
 
-              {/* Status */}
-              <Select
-                label={
-                  <span className="flex items-center gap-2">
-                    <User size={14} />
-                    Status
-                  </span>
-                }
-                options={[
-                  { value: "not_started", label: "Not Started" },
-                  { value: "on_progress", label: "In Progress" },
-                  { value: "done", label: "Done" },
-                  { value: "reject", label: "Rejected" },
-                ]}
-                error={errors.status?.message}
-                fullWidth
-                className="mb-4"
-                {...register("status")}
+            {/* Descripttion */}
+            <div className="mb-4">
+              <label className="mb-1 text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
+                <FileText size={14} />
+                Description
+              </label>
+              <textarea
+                className={`block w-full rounded-md border ${
+                  errors.description
+                    ? "border-red-500 focus:border-red-500 focus:ring-red-500"
+                    : "border-gray-300 dark:border-gray-600 focus:border-blue-500 focus:ring-blue-500"
+                } px-3 py-2 text-sm focus:outline-none focus:ring-1 bg-transparent text-gray-900 dark:text-gray-100`}
+                rows={4}
+                {...register("description")}
+                placeholder="Add a detailed description of the task..."
               />
+              {errors.description && (
+                <p className="mt-1 text-sm text-red-500">
+                  {errors.description.message}
+                </p>
+              )}
+            </div>
 
-              {/* Assignent */}
-              <UserAssignmentSelect
-                label="Assign to Team Members"
-                users={teamUsers}
-                selectedUserIds={selectedAssignees}
-                onChange={setSelectedAssignees}
-                placeholder="Select team members to assign..."
-                isLoading={fetchingUsers}
-                className="mb-6"
-                error={errors.assignedToIds?.message}
-              />
+            {/* Status */}
+            <Select
+              label={
+                <span className="flex items-center gap-2">
+                  <User size={14} />
+                  Status
+                </span>
+              }
+              options={[
+                { value: "not_started", label: "Not Started" },
+                { value: "on_progress", label: "In Progress" },
+                { value: "done", label: "Done" },
+                { value: "reject", label: "Rejected" },
+              ]}
+              error={errors.status?.message}
+              fullWidth
+              className="mb-4"
+              {...register("status")}
+            />
 
-              {/* Create task button */}
-              <Button
-                type="submit"
-                variant="gradient"
-                isLoading={isLoading}
-                fullWidth
-                className="flex items-center gap-2 justify-center shadow-md"
-                leftIcon={<Save size={16} />}
-              >
-                Create Task
-              </Button>
-            </form>
-          </CardContent>
-        </Card>
-      </main>
-    </div>
+            {/* Assignent */}
+            <UserAssignmentSelect
+              label="Assign to Team Members"
+              users={teamUsers}
+              selectedUserIds={selectedAssignees}
+              onChange={setSelectedAssignees}
+              placeholder="Select team members to assign..."
+              isLoading={fetchingUsers}
+              className="mb-6"
+              error={errors.assignedToIds?.message}
+            />
+
+            {/* Create task button */}
+            <Button
+              type="submit"
+              variant="gradient"
+              isLoading={isLoading}
+              fullWidth
+              className="flex items-center gap-2 justify-center shadow-md"
+              leftIcon={<Save size={16} />}
+            >
+              Create Task
+            </Button>
+          </form>
+        </CardContent>
+      </Card>
+    </>
   );
 }

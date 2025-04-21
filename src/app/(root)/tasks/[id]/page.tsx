@@ -1,6 +1,5 @@
 "use client";
 
-import { Navbar } from "@/components/navbar";
 import { ActivityLogSection } from "@/components/task/activity-log";
 import { TaskDescription } from "@/components/task/task-description";
 import { TaskHeader } from "@/components/task/task-header";
@@ -105,7 +104,7 @@ export default function TaskDetailsPage() {
             title: "Task Not Found",
             message: "The requested task does not exist.",
           });
-          router.push("/dashboard");
+          router.push("/");
           return;
         }
 
@@ -162,7 +161,7 @@ export default function TaskDetailsPage() {
         message: "The task has been successfully deleted.",
       });
 
-      router.push("/dashboard");
+      router.push("/");
       return Promise.resolve();
     } catch (err) {
       setError((err as Error).message);
@@ -198,66 +197,62 @@ export default function TaskDetailsPage() {
   const canEdit = isLead || isAssignedToMe;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
-      <Navbar user={currentUser} />
+    <>
+      <TaskHeader
+        taskId={taskId}
+        isLead={isLead}
+        canEdit={canEdit}
+        onDelete={handleDelete}
+        isDeleting={isDeleting}
+      />
 
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <TaskHeader
-          taskId={taskId}
-          isLead={isLead}
-          canEdit={canEdit}
-          onDelete={handleDelete}
-          isDeleting={isDeleting}
-        />
+      {error && (
+        <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-800 dark:text-red-200 p-4 rounded-md mb-6 flex items-center gap-2">
+          <AlertCircle size={16} />
+          {error}
+        </div>
+      )}
 
-        {error && (
-          <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-800 dark:text-red-200 p-4 rounded-md mb-6 flex items-center gap-2">
-            <AlertCircle size={16} />
-            {error}
-          </div>
-        )}
-
-        {loading ? (
-          <Card className="text-center py-12 bg-white dark:bg-gray-800 shadow-md">
-            <CardContent>
-              <div className="animate-spin rounded-full h-12 w-12 border-4 border-blue-600 border-r-transparent mx-auto"></div>
-              <p className="mt-4 text-gray-600 dark:text-gray-400">
-                Loading task details...
-              </p>
+      {loading ? (
+        <Card className="text-center py-12 bg-white dark:bg-gray-800 shadow-md">
+          <CardContent>
+            <div className="animate-spin rounded-full h-12 w-12 border-4 border-blue-600 border-r-transparent mx-auto"></div>
+            <p className="mt-4 text-gray-600 dark:text-gray-400">
+              Loading task details...
+            </p>
+          </CardContent>
+        </Card>
+      ) : task ? (
+        <div>
+          <Card className="bg-white dark:bg-gray-800 shadow-md mb-6">
+            <CardContent className="p-6">
+              <TaskTitle
+                title={task.title}
+                status={task.status as TaskStatus}
+              />
+              <TaskDescription description={task.description} />
+              <TaskMetaInfo
+                createdBy={task.createdBy}
+                assignees={task.assignees}
+                createdAt={task.createdAt}
+                updatedAt={task.updatedAt}
+              />
             </CardContent>
           </Card>
-        ) : task ? (
-          <div>
-            <Card className="bg-white dark:bg-gray-800 shadow-md mb-6">
-              <CardContent className="p-6">
-                <TaskTitle
-                  title={task.title}
-                  status={task.status as TaskStatus}
-                />
-                <TaskDescription description={task.description} />
-                <TaskMetaInfo
-                  createdBy={task.createdBy}
-                  assignees={task.assignees}
-                  createdAt={task.createdAt}
-                  updatedAt={task.updatedAt}
-                />
-              </CardContent>
-            </Card>
 
-            {/* Activity logs section */}
-            <ActivityLogSection activityLogs={task.activityLogs || []} />
-          </div>
-        ) : (
-          <Card className="text-center py-12 bg-white dark:bg-gray-800 shadow-md">
-            <CardContent>
-              <AlertCircle className="h-12 w-12 text-red-500 mx-auto" />
-              <p className="mt-4 text-gray-600 dark:text-gray-400">
-                Task not found or you don&apos;t have permission to view it
-              </p>
-            </CardContent>
-          </Card>
-        )}
-      </main>
-    </div>
+          {/* Activity logs section */}
+          <ActivityLogSection activityLogs={task.activityLogs || []} />
+        </div>
+      ) : (
+        <Card className="text-center py-12 bg-white dark:bg-gray-800 shadow-md">
+          <CardContent>
+            <AlertCircle className="h-12 w-12 text-red-500 mx-auto" />
+            <p className="mt-4 text-gray-600 dark:text-gray-400">
+              Task not found or you don&apos;t have permission to view it
+            </p>
+          </CardContent>
+        </Card>
+      )}
+    </>
   );
 }

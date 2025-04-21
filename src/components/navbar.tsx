@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Small, Typography } from "@/components/ui/typography";
+import { User } from "@/lib/db";
 import { getInitials } from "@/lib/utils";
 import { ClipboardList, LogOut, Menu, Shield, X } from "lucide-react";
 import Link from "next/link";
@@ -10,19 +11,14 @@ import { useState } from "react";
 import { ThemeSwitch } from "./ui/theme-switch";
 
 interface NavbarProps {
-  user: {
-    id: number;
-    name: string;
-    email: string;
-    role: string;
-  };
+  user?: User;
 }
 
 export function Navbar({ user }: NavbarProps) {
   const router = useRouter();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const isLead = user.role === "lead";
+  const isLead = user?.role === "lead";
 
   const handleLogout = async () => {
     setIsLoggingOut(true);
@@ -49,7 +45,7 @@ export function Navbar({ user }: NavbarProps) {
         {/* Logo */}
         <div className="flex justify-between h-16">
           <div className="flex items-center">
-            <Link href="/dashboard" className="flex items-center">
+            <Link href="/" className="flex items-center">
               <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-md flex items-center justify-center text-white shadow-md">
                 <ClipboardList size={20} />
               </div>
@@ -98,14 +94,14 @@ export function Navbar({ user }: NavbarProps) {
               <div className="relative group">
                 <div className="flex items-center gap-2 px-3 py-2 ">
                   <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full flex items-center justify-center text-white text-sm font-medium shadow-sm">
-                    {getInitials(user.name)}
+                    {user?.name && getInitials(user?.name)}
                   </div>
                   <div className="flex flex-col">
                     <Typography className="text-sm font-medium">
-                      {user.name}
+                      {user?.name}
                     </Typography>
                     <Small className="text-gray-500 dark:text-gray-400 capitalize">
-                      {user.role}
+                      {user?.role}
                     </Small>
                   </div>
                 </div>
@@ -145,14 +141,14 @@ export function Navbar({ user }: NavbarProps) {
 
               <div className="flex items-center gap-2 w-full p-3 rounded-md bg-gray-50 dark:bg-gray-700">
                 <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full flex items-center justify-center text-white text-sm font-medium">
-                  {getInitials(user.name)}
+                  {user?.name && getInitials(user?.name)}
                 </div>
                 <div className="flex flex-col">
                   <Typography className="text-sm font-medium">
-                    {user.name}
+                    {user?.name}
                   </Typography>
                   <Small className="text-gray-500 dark:text-gray-400 capitalize">
-                    {user.role}
+                    {user?.role}
                   </Small>
                 </div>
               </div>

@@ -51,10 +51,7 @@ export async function requireAuth(redirectTo = "/auth/login") {
   return user;
 }
 
-export async function requireRole(
-  role: "lead" | "team",
-  redirectTo = "/dashboard"
-) {
+export async function requireRole(role: "lead" | "team", redirectTo = "/") {
   const user = await requireAuth();
 
   if (user.role !== role) {

@@ -45,7 +45,7 @@ export default function LoginForm() {
         throw new Error(responseData.error || "Failed to login");
       }
 
-      router.push("/dashboard");
+      router.push("/");
       router.refresh();
 
       showToast({

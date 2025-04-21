@@ -19,7 +19,7 @@ export function TaskHeader({
   taskId,
   isLead,
   canEdit,
-  backTo = "/dashboard",
+  backTo = "/",
   onDelete,
   isDeleting = false,
 }: TaskHeaderProps) {
@@ -49,7 +49,7 @@ export function TaskHeader({
         message: "The task has been successfully deleted.",
       });
 
-      router.push("/dashboard");
+      router.push("/");
     } catch (err) {
       showToast({
         type: "error",
@@ -68,7 +68,7 @@ export function TaskHeader({
           className="flex items-center gap-2"
           leftIcon={<ArrowLeft size={16} />}
         >
-          {backTo === "/dashboard" ? "Back to Dashboard" : "Back"}
+          {backTo === "/" ? "Back to Dashboard" : "Back"}
         </Button>
       </Link>
 
