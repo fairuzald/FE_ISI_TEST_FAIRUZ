@@ -1,0 +1,52 @@
+{
+  "name": "fe_isi_test_fairuz",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p ${PORT:-3000}",
+    "build": "next build",
+    "start": "next start -p ${PORT:-3000}",
+    "lint": "next lint",
+    "db:generate": "npx drizzle-kit generate",
+    "db:migrate": "npx drizzle-kit migrate",
+    "db:push": "npx drizzle-kit push",
+    "db:studio": "drizzle-kit studio",
+    "db:seed": "npx tsx src/lib/db/seed.ts",
+    "docker:dev": "docker compose -f docker-compose.dev.yml up",
+    "docker:dev:build": "docker compose -f docker-compose.dev.yml up --build",
+    "docker:dev:down": "docker compose -f docker-compose.dev.yml down",
+    "docker:dev:clean": "docker compose -f docker-compose.dev.yml down --volumes",
+    "docker:prod": "docker compose -f docker-compose.prod.yml up -d",
+    "docker:prod:build": "docker compose -f docker-compose.prod.yml up -d --build"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^5.0.1",
+    "@neondatabase/serverless": "^1.0.0",
+    "bcrypt": "^5.1.1",
+    "clsx": "^2.1.1",
+    "dotenv": "^16.5.0",
+    "drizzle-orm": "^0.42.0",
+    "jsonwebtoken": "^9.0.2",
+    "next": "14.2.24",
+    "pg": "^8.14.1",
+    "react": "^18",
+    "react-dom": "^18",
+    "react-hook-form": "^7.55.0",
+    "tailwind-merge": "^3.2.0",
+    "zod": "^3.24.3"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/jsonwebtoken": "^9.0.9",
+    "@types/node": "^20",
+    "@types/pg": "^8.11.13",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "drizzle-kit": "^0.31.0",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.24",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5"
+  }
+}
